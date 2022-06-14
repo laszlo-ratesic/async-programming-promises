@@ -42,12 +42,12 @@ export function xhr() {
     let xhr = new XMLHttpRequest();
     xhr.open('GET', 'http://localhost:3000/users/7');
     xhr.onload = () => {
-        if(xhr.status === 200) {
-            resolve(xhr.responseText);
-        } else {
-            reject("Request Failed");
-        }
-    }
+      if (xhr.status === 200) {
+        resolve(xhr.responseText);
+      } else {
+        reject('Request Failed');
+      }
+    };
     xhr.onerror = () => reject('Network error');
     xhr.send();
   });
@@ -56,24 +56,46 @@ export function xhr() {
 }
 
 export function allPromises() {
-    let categories = axios.get('http://localhost:3000/itemCategories');
-    let statuses = axios.get('http://localhost:3000/orderStatuses');
-    let userTypes = axios.get('http://localhost:3000/userTypes');
-    let addressTypes = axios.get('http://localhost:3000/addressTypes');
+  let categories = axios.get('http://localhost:3000/itemCategories');
+  let statuses = axios.get('http://localhost:3000/orderStatuses');
+  let userTypes = axios.get('http://localhost:3000/userTypes');
+  let addressTypes = axios.get('http://localhost:3000/addressTypes');
 
-    Promise.all([categories, statuses, userTypes, addressTypes])
+  Promise.all([categories, statuses, userTypes, addressTypes])
     .then(([cat, stat, type, address]) => {
-        setText("");
+      setText('');
 
-        appendText(JSON.stringify(cat.data));
-        appendText(JSON.stringify(stat.data));
-        appendText(JSON.stringify(type.data));
-        appendText(JSON.stringify(address.data));
-    }).catch(reasons => {
-        setText(reasons);
+      appendText(JSON.stringify(cat.data));
+      appendText(JSON.stringify(stat.data));
+      appendText(JSON.stringify(type.data));
+      appendText(JSON.stringify(address.data));
     })
+    .catch((reasons) => {
+      setText(reasons);
+    });
 }
 
-export function allSettled() {}
+export function allSettled() {
+  let categories = axios.get('http://localhost:3000/itemCategories');
+  let statuses = axios.get('http://localhost:3000/orderStatuses');
+  let userTypes = axios.get('http://localhost:3000/userTypes');
+  let addressTypes = axios.get('http://localhost:3000/addressTypes');
+
+  Promise.allSettled([categories, statuses, userTypes, addressTypes])
+    .then((values) => {
+      let results = values.map((v) => {
+        if (v.status === 'fulfilled') {
+          return `FULFILLED: ${JSON.stringify(v.value.data[0])} `;
+        }
+
+        return `REJECTED: ${v.reason.message} `;
+      });
+
+      setText(results);
+    })
+    .catch((reasons) => {
+      setText(reasons);
+    });
+}
 
 export function race() {}
