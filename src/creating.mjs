@@ -19,11 +19,23 @@ export function interval() {
     }, 1500);
   });
 
-  wait.then((text) => setText(text))
-  .finally(() => appendText(` -- Done ${counter}`));
+  wait
+    .then((text) => setText(text))
+    .finally(() => appendText(` -- Done ${counter}`));
 }
 
-export function clearIntervalChain() {}
+export function clearIntervalChain() {
+  let counter = 0;
+  let interval;
+  const wait = new Promise((resolve) => {
+    interval = setInterval(() => {
+      console.log('interval');
+      resolve(`Timeout! ${++counter}`);
+    }, 1500);
+  });
+
+  wait.then((text) => setText(text)).finally(() => clearInterval(interval));
+}
 
 export function xhr() {}
 
