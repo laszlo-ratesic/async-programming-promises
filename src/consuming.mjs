@@ -19,7 +19,14 @@ export function getCatch() {
     .catch((err) => setText(err));
 }
 
-export function chain() {}
+export function chain() {
+  axios.get('http://localhost:3000/orders/1').then(({ data }) => {
+    return axios.get(`http://localhost:3000/addresses/${data.shippingAddress}`);
+  })
+  .then(({ data }) => {
+    setText(`City: ${data.city}`);
+  })
+}
 
 export function chainCatch() {}
 export function final() {}
