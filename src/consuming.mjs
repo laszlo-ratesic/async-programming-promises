@@ -1,16 +1,25 @@
-import setText, {appendText, showWaiting, hideWaiting} from "./results.mjs";
+import setText, { appendText, showWaiting, hideWaiting } from './results.mjs';
 
 export function get() {
+  // starts by calling xhr get request
+  axios
+    .get('http://localhost:3000/orders/1')
+    // fulfills promise
+    .then(({ data }) => {
+      setText(JSON.stringify(data));
+    });
 }
 
 export function getCatch() {
+  axios
+    .get('http://localhost:3000/orders/123')
+    .then(({ data }) => {
+      setText(JSON.stringify(data));
+    })
+    .catch((err) => setText(err));
 }
 
-export function chain() {
-}
+export function chain() {}
 
-export function chainCatch() {
-}
-
-export function final() {
-}
+export function chainCatch() {}
+export function final() {}

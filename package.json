@@ -18,11 +18,19 @@
   },
   "homepage": "https://github.com/taylonr/async-programming-promises#readme",
   "dependencies": {
+<<<<<<< HEAD
     "cross-env": "^7.0.2",
     "express": "^4.17.1",
     "json-server": "^0.15.1"
   },
   "devDependencies": {
+=======
+    "cross-env": "^6.0.3",
+    "express": "^4.17.1",
+    "json-server": "^0.15.1"
+  },
+    "devDependencies": {
+>>>>>>> understanding-promises
     "nodemon": "^2.0.2"
   }
 }
